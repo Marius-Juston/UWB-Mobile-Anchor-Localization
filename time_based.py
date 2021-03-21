@@ -47,7 +47,7 @@ class Localize:
                       b * np.cos(c5 * (t - c6)) * np.sin(c3 * (t - c4)) * (c8 - np.cos(t) * c9) + y0)
 
         bottom = 2 * np.sqrt((a * np.sin(c1 * (t - c2)) * (c7 - np.sin(t) * c10) + x0) ** 2 + (
-                    b * np.cos(c5 * (t - c6)) * np.sin(c3 * (t - c4)) * (c8 - np.cos(t) * c9) + y0) ** 2)
+                b * np.cos(c5 * (t - c6)) * np.sin(c3 * (t - c4)) * (c8 - np.cos(t) * c9) + y0) ** 2)
 
         return top / bottom
 

@@ -60,7 +60,6 @@ if __name__ == '__main__':
     path_coordinate = l.create_mobile_robot_positions()
     robot_pose = l.random_stationary_robot()
 
-
     fig, position_ax = plt.subplots(1)
     # fig, position_ax,range_ax,derivative_ax = plt.subplots(1)
 
