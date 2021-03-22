@@ -1,5 +1,6 @@
 from enum import Enum, unique
 
+import matplotlib.pyplot as plt
 import numpy as np
 
 from adhoc.node import StationaryNode, MobileNode
@@ -7,8 +8,8 @@ from adhoc.node import StationaryNode, MobileNode
 
 @unique
 class NodeEnum(Enum):
-    StationaryNode = {'id': 0, 'color': (0, 0, 1), 'p': 0}
-    MobileNode = {'id': 1, 'color': (0, 1, 0), 'p': 1}
+    StationaryNode = {'id': 0, 'color': (0, 0, 1), 'p': .5}
+    MobileNode = {'id': 1, 'color': (0, 1, 0), 'p': .5}
 
 
 class RandomNetwork:
@@ -60,6 +61,32 @@ class RandomNetwork:
 
             print(node, len(self.network), actual_pose)
 
+    def draw_network(self):
+        ax = plt.gca()
+        ax.cla()
+
+        for node in self.network:
+            node_type = NodeEnum.__members__[type(node).__name__]
+
+            color = node_type.value['color']
+
+            if node_type is NodeEnum.StationaryNode:
+                pose = node.x
+
+                ax.scatter(pose[0], pose[1], color=color)
+            elif node_type is NodeEnum.MobileNode:
+                pose = node.actual_pose
+
+                outline_color = 'r'
+                if node.is_localized:
+                    outline_color = 'b'
+
+                ax.scatter(pose[0], pose[1], s=75, color=outline_color)
+                ax.scatter(pose[0], pose[1], color=color)
+
 
 if __name__ == '__main__':
     node_network = RandomNetwork()
+
+    node_network.draw_network()
+    plt.show()
