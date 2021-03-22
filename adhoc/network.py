@@ -2,11 +2,15 @@ import numpy as np
 
 from adhoc.node import StationaryNode, MobileNode
 
+class NodeEnum:
+    StationaryNode = 0
+    MobileNode = 1
+
 
 class RandomNetwork:
     node_weight = {
-        StationaryNode: 0,
-        MobileNode: 1
+        NodeEnum.StationaryNode: .1,
+        NodeEnum.MobileNode: .9
     }
 
     def __init__(self, N=10) -> None:
@@ -18,7 +22,13 @@ class RandomNetwork:
         self.create_random_nodes()
 
     def create_random_nodes(self):
-        node_choices = np.random.choice(RandomNetwork.node_weight.keys(), self.N, p=RandomNetwork.node_weight.values())
+        node_choices = np.random.choice(
+            tuple(RandomNetwork.node_weight.keys()),
+            self.N,
+            p=tuple(RandomNetwork.node_weight.values())
+        )
+
+
 
         print(node_choices)
 
