@@ -2,17 +2,21 @@ from adhoc.multi_tag import AsymmetricMotion
 
 
 class StationaryNode:
-    def __init__(self, x) -> None:
+    def __init__(self, id, x) -> None:
         super().__init__()
 
+        self.id = id
         self.x = x
 
 
 class MobileNode:
     tag_distance = 0.13
 
-    def __init__(self, actual_pose, is_localized=False) -> None:
+    def __init__(self, id, right_id, left_id, actual_pose, is_localized=False) -> None:
         super().__init__()
+        self.id = id
+        self.left_id = left_id
+        self.right_id = right_id
         self.actual_pose = actual_pose
 
         self.x = None
