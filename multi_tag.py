@@ -17,7 +17,7 @@ class AsymetricMotion:
         self.c7 = 1
         self.c8 = 4.56
 
-    def calculate(self, t, b=0, symmetrical_offset=True):
+    def calculate(self, t):
         self.r = np.vstack([self.a * np.cos(self.c1 * (t - self.c2)) * np.cos(self.c3 * (t - self.c4)),
                             self.b * np.cos(self.c5 * (t - self.c6)) * np.sin(self.c7 * (t - self.c8))])
 
@@ -51,6 +51,16 @@ class AsymetricMotion:
 
         self.w = self.v_mag * self.k
 
+    def calculate_offset(self, d=0):
+        rotation_matrix = np.array([
+            [0, 1],
+            [-1, 0]
+        ])
+
+        rotated_scaled_v = rotation_matrix @ self.v / self.v_mag
+
+        return self.r + d * rotated_scaled_v
+
 
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
@@ -62,6 +72,10 @@ if __name__ == '__main__':
     model.calculate(t)
 
     plt.plot(model.r[0], model.r[1])
+
+    r = model.calculate_offset(-0.13)
+
+    plt.plot(r[0], r[1])
     plt.show()
 
     plt.plot(t, model.v_mag)
