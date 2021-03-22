@@ -1,4 +1,4 @@
-from adhoc.multi_tag import AsymetricMotion
+from adhoc.multi_tag import AsymmetricMotion
 
 
 class StationaryNode:
@@ -14,4 +14,4 @@ class MobileNode:
         super().__init__()
         self.x = x
         self.is_localized = is_localized
-        self.asymetric_motion = AsymetricMotion()
+        self.asymmetric_motion = AsymmetricMotion()

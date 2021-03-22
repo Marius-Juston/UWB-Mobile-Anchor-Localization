@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class AsymetricMotion:
+class AsymmetricMotion:
 
     def __init__(self) -> None:
         super().__init__()
@@ -67,7 +67,7 @@ if __name__ == '__main__':
 
     t = np.linspace(0, np.pi)
 
-    model = AsymetricMotion()
+    model = AsymmetricMotion()
 
     model.calculate(t)
 
