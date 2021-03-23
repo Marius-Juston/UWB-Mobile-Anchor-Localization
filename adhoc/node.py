@@ -1,7 +1,12 @@
 from adhoc.multi_tag import AsymmetricMotion
 
 
-class StationaryNode:
+class BaseNode:
+    def update(self):
+        pass
+
+
+class StationaryNode(BaseNode):
     def __init__(self, id, x) -> None:
         super().__init__()
 
@@ -9,7 +14,7 @@ class StationaryNode:
         self.x = x
 
 
-class MobileNode:
+class MobileNode(BaseNode):
     tag_distance = 0.13
 
     def __init__(self, id, right_id, left_id, actual_pose, is_localized=False) -> None:
@@ -30,7 +35,9 @@ class MobileNode:
         self.right_tag_pose = None
         self.left_tag_pose = None
 
-    def update(self, current_time):
+        self.neighbor = None
+
+    def update_pose(self, current_time):
         if not self.is_moving:
             self.is_moving = True
             self.start_t = current_time
@@ -46,3 +53,12 @@ class MobileNode:
     def stop(self):
         self.start_t = None
         self.is_moving = False
+
+    def triangulate(self):
+        pass
+
+    def update(self):
+        if not self.is_localized:
+            pass
+        else:
+            print("Anchor is localized")
