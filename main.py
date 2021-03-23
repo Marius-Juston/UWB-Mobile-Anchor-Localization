@@ -46,13 +46,22 @@ class Localize:
 
     def trilateration(self, positions, ranges, started_pose=(0, 0, 0)):
         def residuals(x):
-            diff = x.reshape((-1, 1)) - positions
+            angle = x[-1]
 
-            return np.linalg.norm(diff, axis=0) - ranges
+            c = np.cos(angle)
+            s = np.sin(angle)
 
-        res = least_squares(residuals, started_pose)
+            position = np.matmul((
+                (c, -s, 0),
+                (s, c, 0),
+                (0, 0, 1)
+            ), positions)
 
         return res.x
+            return diff - (ranges * ranges)
+
+        res = least_squares(residuals, started_pose, jac='3-point', tr_solver='lsmr')
+
 
 
 if __name__ == '__main__':

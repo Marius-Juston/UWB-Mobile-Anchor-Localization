@@ -59,6 +59,7 @@ class AsymmetricMotion:
             (c, -s),
             (s, c)
         ), self.r)
+
     def calculate_offset(self, d=0):
         rotation_matrix = np.array([
             [0, 1],
@@ -82,7 +83,9 @@ if __name__ == '__main__':
     plt.plot(model.r[0], model.r[1])
 
     r = model.calculate_offset(-0.13)
+    plt.plot(r[0], r[1])
 
+    r = model.rotate_pose(np.radians(110))
     plt.plot(r[0], r[1])
     plt.show()
 
