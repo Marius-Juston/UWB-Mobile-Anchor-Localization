@@ -57,11 +57,13 @@ class Localize:
                 (0, 0, 1)
             ), positions)
 
-        return res.x
-            return diff - (ranges * ranges)
+            diff = x[:-1].reshape((-1, 1)) - position
+
+            return np.linalg.norm(diff, axis=0) - ranges
 
         res = least_squares(residuals, started_pose, jac='3-point', tr_solver='lsmr')
 
+        return res.x[:-1]
 
 
 if __name__ == '__main__':
@@ -85,7 +87,7 @@ if __name__ == '__main__':
 
     for i in range(N):
         ranges = l.ranges_calculation(path_coordinate, robot_pose, mean=0, std=0.5)
-        estimated_location = l.trilateration(path_coordinate, ranges, np.random.uniform(0, 0, 3))
+        estimated_location = l.trilateration(path_coordinate, ranges, np.random.uniform(0, 0, 4))
         # print(estimated_location)
         position_ax.scatter(estimated_location[0], estimated_location[1], c='g')
 
