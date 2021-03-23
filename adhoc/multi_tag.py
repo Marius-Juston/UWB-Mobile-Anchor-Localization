@@ -51,6 +51,14 @@ class AsymmetricMotion:
 
         self.w = self.v_mag * self.k
 
+    def rotate_pose(self, angle):
+        c = np.cos(angle)
+        s = np.sin(angle)
+
+        return np.matmul((
+            (c, -s),
+            (s, c)
+        ), self.r)
     def calculate_offset(self, d=0):
         rotation_matrix = np.array([
             [0, 1],
