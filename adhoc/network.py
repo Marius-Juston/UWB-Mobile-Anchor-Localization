@@ -13,12 +13,14 @@ class NodeEnum(Enum):
 
 
 class RandomNetwork:
-    def __init__(self, N=10, start_range=((-10, 10), (-10, 10))) -> None:
+    def __init__(self, N=10, start_range=((-10, 10), (-10, 10)), dt=0.1) -> None:
         super().__init__()
 
+        self.dt = dt
         self.start_range = start_range
         self.N = N
         self.network = None
+        self.current_time = 0
 
         self.create_random_nodes()
 
@@ -84,9 +86,28 @@ class RandomNetwork:
                 ax.scatter(pose[0], pose[1], s=75, color=outline_color)
                 ax.scatter(pose[0], pose[1], color=color)
 
+    def step(self):
+        for node in self.network:
+            if NodeEnum.__members__[type(node).__name__] == NodeEnum.MobileNode:
+                node.neighbor = [other_node for other_node in self.network if node != other_node]
+
+        for node in self.network:
+            node.update()
+
+        self.current_time += self.dt
+
+        self.draw_network()
+        plt.show()
+
 
 if __name__ == '__main__':
     node_network = RandomNetwork()
 
-    node_network.draw_network()
+    plt.ion()
+    plt.show(block=False)
+
+    for i in range(100):
+        node_network.step()
+        plt.pause(0.0001)
+
     plt.show()
