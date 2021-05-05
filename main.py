@@ -86,7 +86,7 @@ if __name__ == '__main__':
     N = 1000
 
     for i in range(N):
-        ranges = l.ranges_calculation(path_coordinate, robot_pose, mean=0, std=0.5)
+        ranges = l.ranges_calculation(path_coordinate, robot_pose, mean=0, std=0.15)
         estimated_location = l.trilateration(path_coordinate, ranges, np.random.uniform(0, 0, 4))
         # print(estimated_location)
         position_ax.scatter(estimated_location[0], estimated_location[1], c='g')
